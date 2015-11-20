@@ -95,8 +95,8 @@
   " Use Consolas for Windows, and the Apache-licensed Droid Sans Mono for other
     systems. Just assume the fonts are available."
   (if (kimgr/is-windows)
-      "Consolas 14"
-    "Droid Sans Mono 14"))
+      "Consolas 12"
+    "Droid Sans Mono 10"))
 
 ;; Windowing-specific settings.
 (when (display-graphic-p)
@@ -109,11 +109,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom key-bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; clang-format: C-tab: clang-format-region
+;; clang-format-region
 (global-set-key (kbd "C-x TAB")
                 'clang-format-region)
 
-;; C-x C-r: recentf
+;; recentf
 (defun kimgr/recent-open-files ()
   (interactive)
   (if (find-file (ido-completing-read "Find recent file: " recentf-list))
@@ -123,25 +123,32 @@
 (global-set-key (kbd "C-x C-r")
                 'kimgr/recent-open-files)
 
-;; C-x C-SPC: fill-region
+;; fill-region
 (global-set-key (kbd "C-x C-SPC")
                 'fill-region)
 
-;; C-x w: whitespace-mode
+;; whitespace-mode
 (global-set-key (kbd "C-x w")
                 'whitespace-mode)
 
-;; duplicate-thing: C-c d: duplicate-thing
+;; duplicate-thing
 (global-set-key (kbd "C-c d")
                 'duplicate-thing)
 
-;; switch-window: C-x o
+;; switch-window
 (global-set-key (kbd "C-x o")
                 'switch-window)
 
 ;; etags-select
 (global-set-key "\M-?" 'etags-select-find-tag-at-point)
 (global-set-key "\M-." 'etags-select-find-tag)
+(global-set-key "\M-:" 'pop-tag-mark) ;; This is bound to eval-expression by
+                                      ;; default. May want to reconsider.
+
+;; compile
+(global-set-key (kbd "C-c C-b")
+                'compile)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
