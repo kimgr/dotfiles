@@ -76,6 +76,19 @@
   (rst-mode)
   (fci-mode)
   (auto-fill-mode))
+(defun revert-all-buffers ()
+  "Refreshes all open buffers from their respective files"
+  (interactive)
+  (let* ((list (buffer-list))
+         (buffer (car list)))
+    (while buffer
+      (when (and (buffer-file-name buffer)
+                 (not (buffer-modified-p buffer)))
+        (set-buffer buffer)
+        (revert-buffer t t t))
+      (setq list (cdr list))
+      (setq buffer (car list))))
+  (message "Refreshed open files"))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -144,6 +157,9 @@
 (global-set-key "\M-." 'etags-select-find-tag)
 (global-set-key "\M-:" 'pop-tag-mark) ;; This is bound to eval-expression by
                                       ;; default. May want to reconsider.
+;; C-x C-a: Revert all buffers
+(global-set-key (kbd "C-x C-a")
+                'revert-all-buffers)
 
 ;; compile
 (global-set-key (kbd "C-c C-b")
