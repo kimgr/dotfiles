@@ -165,6 +165,10 @@
 (global-set-key (kbd "C-c C-b")
                 'compile)
 
+;; magit-status
+(global-set-key (kbd "C-x C-g")
+                'magit-status)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
