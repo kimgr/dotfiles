@@ -76,6 +76,7 @@
   (rst-mode)
   (fci-mode)
   (auto-fill-mode))
+
 (defun revert-all-buffers ()
   "Refreshes all open buffers from their respective files"
   (interactive)
@@ -166,7 +167,7 @@
                 'compile)
 
 ;; magit-status
-(global-set-key (kbd "C-x C-g")
+(global-set-key (kbd "C-x g")
                 'magit-status)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
