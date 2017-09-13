@@ -158,6 +158,11 @@
 (global-set-key "\M-." 'etags-select-find-tag)
 (global-set-key "\M-:" 'pop-tag-mark) ;; This is bound to eval-expression by
                                       ;; default. May want to reconsider.
+;; Bind Super-. to rgrep to simulate 'find references'.
+;; Except on Windows, where rgrep is broken.
+(when (not (kimgr/is-windows))
+  (global-set-key (kbd "s-.") 'rgrep))
+
 ;; C-x C-a: Revert all buffers
 (global-set-key (kbd "C-x C-a")
                 'revert-all-buffers)
