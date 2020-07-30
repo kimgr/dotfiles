@@ -12,17 +12,26 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-(defvar kimgr/packages '(clang-format
+(defvar kimgr/packages '(cargo
+                         clang-format
                          cmake-mode
                          duplicate-thing
                          etags-select
+                         flycheck
+                         flycheck-pyflakes
+                         flycheck-rust
+                         flycheck-yang
                          fill-column-indicator
                          find-things-fast
                          google-c-style
                          jedi
                          lua-mode
                          magit
+                         markdown-mode
+                         rust-mode
                          switch-window
+                         yang-mode
+                         web-mode
                          zenburn-theme)
   "Default packages")
 
@@ -54,6 +63,22 @@
 (setq recentf-max-saved-items 15)
 (recentf-mode 1)
 
+;; web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
+
+;; llvm modes
+(setq load-path
+      (cons (expand-file-name "~/.emacs.d/llvm") load-path))
+(require 'tablegen-mode)
+
+;; flycheck
+(require 'flycheck-pyflakes)
+(global-flycheck-mode)
+
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Utility functions
 (defun kimgr/is-windows()
@@ -77,6 +102,13 @@
   (fci-mode)
   (auto-fill-mode))
 
+(defun strict-markdown-mode ()
+  "Enable both fci-mode and auto-fill-mode, to edit md docs the way God intended."
+  (interactive)
+  (markdown-mode)
+  (fci-mode)
+  (auto-fill-mode))
+
 (defun revert-all-buffers ()
   "Refreshes all open buffers from their respective files"
   (interactive)
@@ -90,8 +122,20 @@
       (setq list (cdr list))
       (setq buffer (car list))))
   (message "Refreshed open files"))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun kimgr/recent-open-files ()
+  "Find recent files."
+  (interactive)
+  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+      (message "Opening file...")
+    (message "Aborting")))
+
+;; Stolen from wanders' https://github.com/wanders/dotfiles-emacs
+(defun kimgr/untabify-region-or-to-eol ()
+  (interactive)
+  (if mark-active
+      (untabify (region-beginning) (region-end))
+    (untabify (point) (point-at-eol))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Appearance settings
@@ -99,11 +143,10 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 
-(custom-set-faces
- '(diff-added ((t (:foreground "Green"))) t)
- '(diff-removed ((t (:foreground "Red"))) t))
-
 (menu-bar-mode -1)
+
+;; Always show buffer name in title.
+(setq frame-title-format "%b")
 
 (defun kimgr/default-font()
   " Use Consolas for Windows, and the Apache-licensed Droid Sans Mono for other
@@ -111,6 +154,23 @@
   (if (kimgr/is-windows)
       "Consolas 12"
     "Droid Sans Mono 10"))
+
+;; Theme cycling, stolen from https://emacs.stackexchange.com/a/26981/
+(setq kimgr/themes '(zenburn whiteboard))
+(setq kimgr/themes-index 0)
+
+(defun kimgr/cycle-theme ()
+  (interactive)
+  (setq kimgr/themes-index (% (1+ kimgr/themes-index) (length kimgr/themes)))
+  (kimgr/load-indexed-theme))
+
+(defun kimgr/load-indexed-theme ()
+  (kimgr/try-load-theme (nth kimgr/themes-index kimgr/themes)))
+
+(defun kimgr/try-load-theme (theme)
+  (if (ignore-errors (load-theme theme :no-confirm))
+      (mapcar #'disable-theme (remove theme custom-enabled-themes))
+    (message "Unable to find theme file for ‘%s’" theme)))
 
 ;; Windowing-specific settings.
 (when (display-graphic-p)
@@ -126,13 +186,6 @@
 ;; clang-format-region
 (global-set-key (kbd "C-x TAB")
                 'clang-format-region)
-
-;; recentf
-(defun kimgr/recent-open-files ()
-  (interactive)
-  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
-      (message "Opening file...")
-    (message "Aborting")))
 
 (global-set-key (kbd "C-x C-r")
                 'kimgr/recent-open-files)
@@ -175,8 +228,17 @@
 (global-set-key (kbd "C-x g")
                 'magit-status)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; untabify
+(global-set-key (kbd "C-c u")
+                'kimgr/untabify-region-or-to-eol)
 
+;; Markdown table align
+(global-set-key (kbd "C-c C-t C-SPC")
+                'markdown-table-align)
+
+;; Cycle theme
+(global-set-key (kbd "C-c t")
+                'kimgr/cycle-theme)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Other behavioral customization
@@ -203,6 +265,3 @@
 
 ;; y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-(provide '.emacs)
-;;; .emacs ends here
