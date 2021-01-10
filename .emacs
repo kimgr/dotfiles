@@ -69,6 +69,11 @@
       (cons (expand-file-name "~/.emacs.d/llvm") load-path))
 (require 'tablegen-mode)
 
+;; magit/forge configuration
+(with-eval-after-load 'magit
+  (require 'forge))
+(setq magit-revision-insert-related-refs nil)
+
 ;; Add external C styles
 (c-add-style "google" google-c-style)
 ; Figure something out for LLVM's non-packaged style.
