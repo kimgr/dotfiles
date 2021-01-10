@@ -69,13 +69,6 @@
       (cons (expand-file-name "~/.emacs.d/llvm") load-path))
 (require 'tablegen-mode)
 
-;; flycheck
-(require 'flycheck-pyflakes)
-(global-flycheck-mode)
-
-(with-eval-after-load 'rust-mode
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Utility functions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
