@@ -69,6 +69,27 @@
       (cons (expand-file-name "~/.emacs.d/llvm") load-path))
 (require 'tablegen-mode)
 
+;; Add external C styles
+(c-add-style "google" google-c-style)
+; Figure something out for LLVM's non-packaged style.
+; (c-add-style "llvm" llvmorg-c-style)
+
+;; Auto-select c-mode
+(defun kimgr/auto-select-c-mode ()
+  (cond ((string-match "/cacheray/" buffer-file-name)
+         (c-set-style "llvm"))
+
+        ((string-match "/include-what-you-use/" buffer-file-name)
+         (c-set-style "google"))
+
+        ((string-match "/llvm-project/" buffer-file-name)
+         (c-set-style "llvm"))
+
+        ; default to google
+        (t (c-set-style "google"))))
+
+(add-hook 'c-mode-common-hook 'kimgr/auto-select-c-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Utility functions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
