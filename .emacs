@@ -8,31 +8,28 @@
 (package-initialize)
 
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             '("melpa" . "https://melpa.org/packages/"))
+;; (add-to-list 'package-archives
+;;              '("marmalade" . "https://marmalade-repo.org/packages/"))
 
-(defvar kimgr/packages '(cargo
-                         clang-format
-                         cmake-mode
-                         duplicate-thing
-                         etags-select
-                         flycheck
-                         flycheck-pyflakes
-                         flycheck-rust
-                         flycheck-yang
-                         fill-column-indicator
-                         find-things-fast
-                         google-c-style
-                         jedi
-                         lua-mode
-                         magit
-                         markdown-mode
-                         rust-mode
-                         switch-window
-                         yang-mode
-                         web-mode
-                         zenburn-theme)
+(defconst kimgr/packages '(cargo
+                           clang-format
+                           cmake-mode
+                           duplicate-thing
+                           etags-select
+                           fill-column-indicator
+                           find-things-fast
+                           forge
+                           google-c-style
+                           jedi
+                           lua-mode
+                           magit
+                           markdown-mode
+                           rust-mode
+                           switch-window
+                           yang-mode
+                           web-mode
+                           zenburn-theme)
   "Default packages")
 
 (defun kimgr/packages-installed-p ()
