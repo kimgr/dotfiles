@@ -203,7 +203,7 @@
 
 ;; Windowing-specific settings.
 (when (display-graphic-p)
-  (set-default-font (kimgr/default-font))
+  (set-frame-font (kimgr/default-font) nil t)
   (load-theme 'zenburn t)
   (tool-bar-mode -1))
 
