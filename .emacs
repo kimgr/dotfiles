@@ -238,6 +238,10 @@
 (when (not (kimgr/is-windows))
   (global-set-key (kbd "s-.") 'rgrep))
 
+;; git grep
+(global-set-key (kbd "C-c g")
+                'vc-git-grep)
+
 ;; C-x C-a: Revert all buffers
 (global-set-key (kbd "C-x C-a")
                 'revert-all-buffers)
