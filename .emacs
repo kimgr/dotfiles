@@ -109,9 +109,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Utility functions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun kimgr/is-windows()
-  (equal system-type 'windows-nt))
-
 (defun reload-dot-emacs ()
   "Reload .emacs after modifications."
   (interactive)
@@ -243,7 +240,7 @@
                                       ;; default. May want to reconsider.
 ;; Bind Super-. to rgrep to simulate 'find references'.
 ;; Except on Windows, where rgrep is broken.
-(when (not (kimgr/is-windows))
+(when (not (equal system-type 'windows-nt))
   (global-set-key (kbd "s-.") 'rgrep))
 
 ;; git grep
