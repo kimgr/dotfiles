@@ -96,6 +96,7 @@
         (t (c-set-style "google"))))
 
 (add-hook 'c-mode-common-hook 'kimgr/auto-select-c-mode)
+(add-hook 'c-mode-common-hook 'which-function-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Utility functions
