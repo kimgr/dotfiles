@@ -271,6 +271,16 @@
 (global-set-key (kbd "C-c t")
                 'kimgr/cycle-theme)
 
+;; Force reasonable keyboard behavior on Mac
+(when (equal system-type 'darwin)
+  (global-set-key (kbd "<home>") 'beginning-of-line)
+  (global-set-key (kbd "<end>") 'end-of-line)
+  (global-set-key (kbd "<C-M-up>") 'toggle-frame-maximized)
+  (setq default-input-method "MacOSX")
+  (setq mac-command-modifier 'super)
+  (setq mac-option-modifier 'meta)
+  (setq mac-right-option-modifier nil))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Other behavioral customization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
