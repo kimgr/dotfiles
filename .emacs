@@ -73,6 +73,8 @@
 (with-eval-after-load 'magit
   (require 'forge))
 (setq magit-revision-insert-related-refs nil)
+(setq git-commit-summary-max-length 64)
+(setq git-commit-fill-column 72)
 
 ;; Add external C styles
 (c-add-style "google" google-c-style)
