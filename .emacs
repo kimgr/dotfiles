@@ -64,10 +64,20 @@
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
 
-;; llvm modes
-(setq load-path
-      (cons (expand-file-name "~/.emacs.d/llvm") load-path))
-(require 'tablegen-mode)
+;; llvm modes (based on my habitual llvm checkout dir)
+(defconst kimgr/llvm-checkout-dir
+  (expand-file-name "~/code/llvm-project"))
+(defconst kimgr/llvm-emacs-dir
+  (format "%s/llvm/utils/emacs" kimgr/llvm-checkout-dir))
+
+(defun kimgr/has-llvm-checkout()
+  (file-exists-p kimgr/llvm-checkout-dir))
+
+(when (kimgr/has-llvm-checkout)
+    (setq load-path (cons kimgr/llvm-emacs-dir load-path))
+    (require 'tablegen-mode)
+    ; hack: explicitly load llvm.org c-style mode and hook
+    (load (format "%s/emacs.el" kimgr/llvm-emacs-dir)))
 
 ;; magit/forge configuration
 (with-eval-after-load 'magit
@@ -78,19 +88,17 @@
 
 ;; Add external C styles
 (c-add-style "google" google-c-style)
-; Figure something out for LLVM's non-packaged style.
-; (c-add-style "llvm" llvmorg-c-style)
 
 ;; Auto-select c-mode
 (defun kimgr/auto-select-c-mode ()
   (cond ((string-match "/cacheray/" buffer-file-name)
-         (c-set-style "llvm"))
+         (c-set-style "llvm.org"))
 
         ((string-match "/include-what-you-use/" buffer-file-name)
          (c-set-style "google"))
 
         ((string-match "/llvm-project/" buffer-file-name)
-         (c-set-style "llvm"))
+         (c-set-style "llvm.org"))
 
         ; default to google
         (t (c-set-style "google"))))
