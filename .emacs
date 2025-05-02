@@ -19,11 +19,14 @@
                            etags-select
                            fill-column-indicator
                            find-things-fast
+                           go-mode
                            google-c-style
                            jedi
+                           lsp-mode
                            magit
                            markdown-mode
                            switch-window
+                           terraform-mode
                            web-mode
                            zenburn-theme)
   "Default packages")
@@ -101,6 +104,26 @@
 
 (add-hook 'c-mode-common-hook 'kimgr/auto-select-c-mode)
 (add-hook 'c-mode-common-hook 'which-function-mode)
+
+;; lsp-mode
+(require 'lsp-mode)
+(setq lsp-keymap-prefix "C-s-l")
+; https://github.com/emacs-lsp/lsp-mode/issues/1532
+(define-key lsp-mode-map (kbd "C-s-l") lsp-command-map)
+
+(defun kimgr/lsp-format ()
+  (interactive)
+  (lsp-format-buffer)
+  (lsp-organize-imports))
+
+;; go-mode
+(add-hook 'go-mode-hook #'lsp-deferred)
+(add-hook 'go-mode-hook
+          (lambda () (set-fill-column 80)))
+(add-hook 'go-mode-hook
+          (lambda () (local-set-key (kbd "C-x TAB")
+                                    'kimgr/lsp-format)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Utility functions
