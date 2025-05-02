@@ -174,15 +174,13 @@
 (setq frame-title-format "%b")
 
 (defun kimgr/default-font()
-  " Use Consolas for Windows, Menlo for macOS and FiraCode for other
+  " Use Consolas for Windows and Menlo for macOS, default for other
     systems. Just assume the fonts are available."
   (cond ((equal system-type 'windows-nt)
          "Consolas 12")
 
         ((equal system-type 'darwin)
-         "Menlo 16")
-
-        (t "FiraCode Retina 12")))
+         "Menlo 16")))
 
 ;; Theme cycling, stolen from https://emacs.stackexchange.com/a/26981/
 (setq kimgr/themes '(zenburn whiteboard))
