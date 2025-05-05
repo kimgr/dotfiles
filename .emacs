@@ -79,12 +79,12 @@
     ; hack: explicitly load llvm.org c-style mode and hook
     (load (format "%s/emacs.el" kimgr/llvm-emacs-dir)))
 
-;; magit/forge configuration
-(with-eval-after-load 'magit
-  (require 'forge))
+;; magit/git configuration
 (setq magit-revision-insert-related-refs nil)
 (setq git-commit-summary-max-length 64)
-(setq git-commit-fill-column 72)
+(add-hook 'git-commit-setup-hook '(lambda ()
+                                    (setq fill-column 72)
+                                    (turn-on-fci-mode)))
 
 ;; Add external C styles
 (c-add-style "google" google-c-style)
