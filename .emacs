@@ -22,6 +22,7 @@
                            go-mode
                            google-c-style
                            jedi
+                           lorem-ipsum
                            lsp-mode
                            magit
                            markdown-mode
@@ -124,6 +125,9 @@
           (lambda () (local-set-key (kbd "C-x TAB")
                                     'kimgr/lsp-format)))
 
+;; lorem ipsum generator
+(require 'lorem-ipsum)
+(lorem-ipsum-use-default-bindings)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Utility functions
