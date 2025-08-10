@@ -129,6 +129,13 @@
 (require 'lorem-ipsum)
 (lorem-ipsum-use-default-bindings)
 
+;; textsize for auto-resizing of fonts across heterogenous display sizes
+(use-package textsize
+  :ensure t
+  :init (textsize-mode)
+  :custom
+  (textsize-default-points 18 "Set default font size"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Utility functions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
