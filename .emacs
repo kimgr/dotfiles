@@ -109,6 +109,8 @@
 (setq lsp-keymap-prefix "C-s-l")
 ; https://github.com/emacs-lsp/lsp-mode/issues/1532
 (define-key lsp-mode-map (kbd "C-s-l") lsp-command-map)
+; also index source files tagged 'integration'
+(setq lsp-go-env '((GOFLAGS . "-tags=integration")))
 
 (defun kimgr/lsp-format ()
   (interactive)
