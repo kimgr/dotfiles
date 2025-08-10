@@ -117,7 +117,7 @@
 
 (add-hook 'python-mode-hook 'kimgr/auto-select-iwyu-python-indent)
 
-;; lsp-mode
+;; go/lsp-mode
 (require 'lsp-mode)
 (setq lsp-keymap-prefix "C-s-l")
 ; https://github.com/emacs-lsp/lsp-mode/issues/1532
