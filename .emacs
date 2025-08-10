@@ -28,6 +28,7 @@
                            switch-window
                            terraform-mode
                            web-mode
+                           yaml-mode
                            zenburn-theme)
   "Default packages")
 
