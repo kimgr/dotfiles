@@ -19,6 +19,7 @@
                            find-things-fast
                            go-mode
                            google-c-style
+                           graphql-mode
                            jedi
                            lorem-ipsum
                            lsp-mode
