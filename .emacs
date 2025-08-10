@@ -106,6 +106,17 @@
 (add-hook 'c-mode-common-hook 'kimgr/auto-select-c-mode)
 (add-hook 'c-mode-common-hook 'which-function-mode)
 
+;; Auto-tweak python-indent for legacy IWYU files
+(defun kimgr/auto-select-iwyu-python-indent ()
+  (cond ((string-match-p "iwyu_test_util\\.py" buffer-file-name)
+         (setq python-indent-offset 2))
+        ((string-match-p "run_iwyu_tests\\.py" buffer-file-name)
+         (setq python-indent-offset 2))
+        ((string-match-p "fix_includes\\(_test\\)?.py" buffer-file-name)
+         (setq python-indent-offset 2))))
+
+(add-hook 'python-mode-hook 'kimgr/auto-select-iwyu-python-indent)
+
 ;; lsp-mode
 (require 'lsp-mode)
 (setq lsp-keymap-prefix "C-s-l")
