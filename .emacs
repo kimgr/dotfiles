@@ -33,9 +33,9 @@
   "Default packages")
 
 (defun kimgr/packages-installed-p ()
-  (loop for pkg in kimgr/packages
-        when (not (package-installed-p pkg)) do (return nil)
-        finally (return t)))
+  (cl-loop for pkg in kimgr/packages
+        when (not (package-installed-p pkg)) do (cl-return nil)
+        finally (cl-return t)))
 
 (unless (kimgr/packages-installed-p)
   (message "%s" "Refreshing package database...")
