@@ -16,7 +16,6 @@
                            duplicate-thing
                            etags-select
                            fill-column-indicator
-                           find-things-fast
                            go-mode
                            google-c-style
                            graphql-mode
